@@ -1,0 +1,17 @@
+--- 
+
+
+# ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt run-it.yml --vault-password-file ~/.gitea.ogpw -b -u $USER -vv
+#
+# ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt run-it.yml --vault-password-file ~/.gitea.ogpw -u root -vv
+#
+
+- name: "Install Gitea" 
+  hosts: gitea_host
+  gather_facts: True
+  roles:
+    - { role: install-gitea, tags: install-gitea }
+    - { role: generate-cert, tags: generate-cert }
+    - { role: create-users, tags: create-users }
+
+

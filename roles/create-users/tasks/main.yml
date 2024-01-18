@@ -1,0 +1,5 @@
+---
+# tasks file for create-users
+
+- name: Create gitea users
+  ansible.builtin.import_tasks: create-users.yml

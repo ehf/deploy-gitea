@@ -1,0 +1,12 @@
+---
+
+- name: "Create gitea users | ansible task set to 'no_log: True'"
+  ansible.builtin.shell:
+    cmd: "{{ gitea_executable_path }} admin user list -c {{ gitea_configuration_ini }} | awk '/^[0-9]/ {print $2}' | grep -w -q {{ item.name }} || {{ gitea_executable_path }} admin user create --username {{ item.name }} {% if item.admin %}--admin{% endif %} --password {{ item.pw }} --email {{ item.email }} -c {{ gitea_configuration_ini }}"
+  no_log: True
+  become: yes
+  become_user: "{{ gitea_user }}"
+  register: create_user_status
+  changed_when: "'has been successfully created!' in create_user_status.stdout"
+  loop: "{{ gitea_users_list }}"
+

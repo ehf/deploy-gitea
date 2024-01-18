@@ -1,0 +1,10 @@
+---
+# handlers file for generate-cert
+
+- name: Restart gitea
+  become: true
+  ansible.builtin.service:
+    name: gitea
+    state: restarted
+  when: ansible_service_mgr == "systemd"
+

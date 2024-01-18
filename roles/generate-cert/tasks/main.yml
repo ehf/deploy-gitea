@@ -1,0 +1,5 @@
+---
+# tasks file for generate-cert
+
+- name: Generate gitea self-signed cert
+  ansible.builtin.import_tasks: generate-cert.yml

@@ -1,0 +1,21 @@
+---
+
+- name: "Run generate cert utility"
+  ansible.builtin.command: 
+    cmd: "{{ gitea_executable_path }} cert --host localhost"
+    chdir: "{{ gitea_home }}/custom/https"
+    creates: "{{ gitea_home }}/custom/https/*.pem"
+  notify:
+    - restart gitea
+
+- name: "set ownership of generated cert and key"
+  ansible.builtin.file: 
+    path: "{{ gitea_home }}/custom/https/{{ item.name }}"
+    owner: "{{ gitea_user }}"
+    group: "{{ gitea_group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { name: 'cert.pem', mode: '0644' }
+    - { name: 'key.pem', mode: '0600' }
+    
+  
