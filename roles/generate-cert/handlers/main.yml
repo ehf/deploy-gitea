@@ -1,7 +1,7 @@
 ---
 # handlers file for generate-cert
 
-- name: Restart gitea
+- name: restart gitea
   become: true
   ansible.builtin.service:
     name: gitea
